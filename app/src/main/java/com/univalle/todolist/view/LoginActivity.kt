@@ -1,5 +1,6 @@
 package com.univalle.todolist.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.FirebaseApp
 import com.univalle.todolist.databinding.ActivityLoginBinding
 import com.univalle.todolist.model.UserModel
 import com.univalle.todolist.ui.theme.ToDoListTheme
@@ -29,6 +31,7 @@ class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userViewModel = ViewModelProvider(this, UserViewModelFactory())[UserViewModel::class.java]
@@ -40,6 +43,18 @@ class LoginActivity : ComponentActivity() {
             }
         }
 
+        binding.btnRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
+        binding.btnRegisterTask.setOnClickListener {
+            startActivity(Intent(this, TaskActivity::class.java))
+        }
+
+        binding.btnOpenAssistant.setOnClickListener {
+            startActivity(Intent(this, AIActivity::class.java))
+        }
+
 
         initializeObservers()
     }
@@ -49,6 +64,7 @@ class LoginActivity : ComponentActivity() {
             when(result){
                 is Result.Success -> {
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, RegisterActivity::class.java))
                 }
                 is Result.Error -> {
                     Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()

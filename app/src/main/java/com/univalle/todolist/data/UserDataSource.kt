@@ -8,10 +8,7 @@ import com.univalle.todolist.utils.Result
 import kotlinx.coroutines.tasks.await
 
 class UserDataSource {
-
     private val auth: FirebaseAuth by lazy { Firebase.auth}
-
-
     suspend fun login(email: String, password: String) : Result<UserModel>{
          return try {
              val authResult = auth.signInWithEmailAndPassword(email, password).await()
